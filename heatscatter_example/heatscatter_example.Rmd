@@ -43,7 +43,7 @@ Note: Runtimes indicated are on my machine with 32 cores and 128 Gb ram.
 ```{r}
 # Change to FALSE if running this example on Binderhub, as otherwise the Kernel will crash
 # If your run it on your own machine with >4GB run, consider setting this to TRUE.
-IS_NOT_BINDER = TRUE
+IS_NOT_BINDER = FALSE
 ```
 
 ```{r}
