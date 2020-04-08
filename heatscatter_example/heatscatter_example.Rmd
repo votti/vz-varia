@@ -128,6 +128,29 @@ system.time({print(p)})
 
 ```
 
+Naive density plotting: small points
+
+```{r}
+
+p <- ggplot(dists_shuffled, aes(x=x, y=y))+
+    geom_point(size=0.1)+
+    ggtitle('Naive scatterplot\nRuntime: ca 3 s')
+
+system.time({print(p)})
+```
+
+Naive density plotting: small points + alpha:
+
+```{r}
+
+p <- ggplot(dists_shuffled, aes(x=x, y=y))+
+    geom_point(size=0.1, alpha=0.01)+
+    ggtitle('Naive scatterplot\nSize + alpha\nRuntime: ca 3 s')
+
+system.time({print(p)})
+
+```
+
 ## 2D bining aproach
 
 My go-to approach for these kind plots is 2D binning the data.
