@@ -27,7 +27,7 @@ I want to show how to do high quality scatter plots when dealing with potentiall
 This is motivated by this datashader tutorial, highlighting key pitfals when doing these kind of plots (https://datashader.org/user_guide/Plotting_Pitfalls.html).
 
 Here I show how these challenges can be addressed by 2D binning in ggplot2 (R). The approach works equaly well in Python Matplotlib or plotnine and I can recommend it also there.
-However, I also would highly recommend looking into Datashader when using Python.
+However, I also would highly recommend looking into Datashader when using Python (https://datashader.org).
 
 Further I compare my approach to  `ggpointdensity`, as suggested to me by twitter (https://github.com/LKremer/ggpointdensity, https://twitter.com/jan_glx/status/1246751358604189697 ).
 
@@ -43,7 +43,7 @@ Note: Runtimes indicated are on my machine with 32 cores and 128 Gb ram.
 ```{r}
 # Change to FALSE if running this example on Binderhub, as otherwise the Kernel will crash
 # If your run it on your own machine with >4GB run, consider setting this to TRUE.
-IS_NOT_BINDER = FALSE
+IS_NOT_BINDER = TRUE
 ```
 
 ```{r}
@@ -276,14 +276,14 @@ Parameters to consider for this:
 - adjust: bandwidth where objects are considered neighbours . The bigger ths smoother the denisty estimate.
 
 
-
+```{r}
 p <- ggplot(dists_shuffled, aes(x=x, y=y))+
     geom_pointdensity(size=0.5, adjust=1, method="default")+
     ggtitle('geom_pointdensity\nDefault colors\nRuntime: ca 60 s')
 
 system.time({print(p)})
 
-
+```
 
 The default plot can be substantially visually improved by using a nonlinear, perceptually uniform colormap and log-transforming the counts.
 
