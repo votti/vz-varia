@@ -41,6 +41,12 @@ Note: Runtimes indicated are on my machine with 32 cores and 128 Gb ram.
 <!-- #endregion -->
 
 ```{r}
+# Change to FALSE if running this example on Binderhub, as otherwise the Kernel will crash
+# If your run it on your own machine with >4GB run, consider setting this to TRUE.
+IS_NOT_BINDER = FALSE
+```
+
+```{r}
 library(data.table) # Most performant data wrangling
 library(ggpointdensity) # for geom_pointdensity
 library(MASS) # for manual contours
@@ -193,7 +199,7 @@ Bins can be used to make the integration coarser or finer.
 
 ```{r}
 p <- ggplot(dists_shuffled, aes(x=x, y=y))+
-    stat_bin2d(aes(color=..count..), bins=100, geom='point', size=1, fill=1)+
+    stat_bin2d(aes(color=..count..), bins=100, geom='point', size=1.4, fill=1)+
     scale_color_viridis(trans = "log10", option='inferno')+
     ggtitle('Bin2D Points\nCoarser Fake Points\nRuntime: ca 0.5 s')
 
@@ -226,15 +232,20 @@ https://datashader.org/user_guide/Plotting_Pitfalls.html
 With the bin2d approach all populations are still well visible without adjusting any parameters:
 From 5 to 50 Mio points runtime scales approximately linearly, as expected.
 
+** Note: This uses >4Gb of Ram and thus cannot be run on Binder ** 
+
 ```{r}
-dists2 <- gaussians(specs=specs_5_pop,num=10000000)
+if (IS_NOT_BINDER){
+    dists2 <- gaussians(specs=specs_5_pop,num=10000000)
 
-p <- ggplot(dists2, aes(x=x, y=y))+
-    stat_bin2d(bins=300)+
-    scale_fill_viridis( name = "count", trans = "log10", option='inferno')+
-    ggtitle('Bin2D\n50 Mio points\nRuntime: ca 82 s')
+    p <- ggplot(dists2, aes(x=x, y=y))+
+        stat_bin2d(bins=300)+
+        scale_fill_viridis( name = "count", trans = "log10", option='inferno')+
+        ggtitle('Bin2D\n50 Mio points\nRuntime: ca 82 s')
 
-system.time({print(p)})
+    system.time({print(p)})
+}
+
 
 ```
 
