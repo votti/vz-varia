@@ -214,14 +214,7 @@ system.time({print(p)})
 
 ```
 
-```{r}
-
-```
-
-This visualization is now really almost equivalent to the `geom_pointdensity` - but way faster
-and better scaling.
-
-Bins can be used to make the integration coarser or finer.
+The bin number can be used to make the integration coarser or finer.
 
 
 ```{r}
@@ -235,7 +228,8 @@ system.time({print(p)})
 
 ```
 
-Whenever bin2d is uese, also geom_hexbin can be used:
+Whenever bin2d is used, also geom_hexbin can be used. 
+This already has a 'point like' aesthetics, but requires the additional package `hexbin`.
 
 ```{r}
 p <- ggplot(dists_shuffled, aes(x=x, y=y))+
@@ -256,6 +250,19 @@ p <- ggplot(dists_shuffled, aes(x=x, y=y))+
     geom_hex(aes(color=..count..),bins=300, fill=1)+
     scale_color_viridis(trans = "log10", option='inferno')+
     ggtitle('Hexbin Points\nColor\nRuntime: ca 0.5 s')
+
+system.time({print(p)})
+
+
+```
+
+Another colormap could help to improve the dynamic range even more:
+
+```{r}
+p <- ggplot(dists_shuffled, aes(x=x, y=y))+
+    geom_hex(aes(color=..count..),bins=300, fill=1)+
+    scale_color_distiller(trans = "log10", palette='Spectral')+
+    ggtitle('Hexbin Points\nColor Diverging\nRuntime: ca 0.5 s')
 
 system.time({print(p)})
 
